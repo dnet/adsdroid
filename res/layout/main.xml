@@ -7,7 +7,24 @@
 <TextView
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:text="Hello World, SearchPanel"
+    android:text="Part name:"
     />
+<Spinner
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/search_mode"
+    android:drawSelectorOnTop="true"
+    android:prompt="@string/search_mode_prompt"
+    />
+<EditText
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/part_name"
+    />
+<Button
+    android:layout_height="wrap_content"
+    android:layout_width="fill_parent"
+    android:text="Search by part name"
+    android:onClick="searchByPartName" />
 </LinearLayout>
 
