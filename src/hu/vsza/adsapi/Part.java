@@ -7,8 +7,10 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import android.os.Parcelable;
+import android.os.Parcel;
 
-public class Part {
+public class Part implements Parcelable {
 
 	protected String name, description, href;
 
@@ -43,4 +45,28 @@ public class Part {
 		pdfConnection.setRequestProperty("Referer", viewPageUrl);
 		return pdfConnection;
 	}
+
+	public int describeContents() {
+		return 0;
+	}
+
+	public void writeToParcel(Parcel out, int flags) {
+		out.writeString(name);
+		out.writeString(description);
+		out.writeString(href);
+	}
+
+	public static final Parcelable.Creator<Part> CREATOR
+		= new Parcelable.Creator<Part>() {
+			public Part createFromParcel(Parcel in) {
+				String name = in.readString();
+				String description = in.readString();
+				String href = in.readString();
+				return new Part(name, description, href);
+			}
+
+			public Part[] newArray(int size) {
+				return new Part[size];
+			}
+		};
 }
