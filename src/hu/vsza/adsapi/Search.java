@@ -21,6 +21,11 @@ public class Search {
 		public int getValue() {
 			return value;
 		}
+
+		@Override
+		public String toString() {
+			return super.toString().toLowerCase().replace("_", " ");
+		}
 	}
 
 	public static List<Part> searchByPartName(String partName, Mode searchMode) throws IOException {
