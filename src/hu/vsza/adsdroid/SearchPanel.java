@@ -1,6 +1,6 @@
 package hu.vsza.adsdroid;
 
-import java.util.List;
+import java.util.ArrayList;
 import java.io.IOException;
 import hu.vsza.adsapi.Search;
 import hu.vsza.adsapi.Part;
@@ -33,7 +33,7 @@ public class SearchPanel extends Activity
 		EditText partNameEditor = (EditText)findViewById(R.id.part_name);
 		String partName = partNameEditor.getText().toString();
 		try {
-			List<Part> results = Search.searchByPartName(partName, selectedSearchMode);
+			ArrayList<Part> results = Search.searchByPartName(partName, selectedSearchMode);
 			Toast.makeText(getBaseContext(), Integer.toString(results.size()) + " result(s) found",
 					Toast.LENGTH_SHORT).show();
 		} catch (IOException ioe) {

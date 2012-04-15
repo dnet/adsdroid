@@ -1,7 +1,6 @@
 package hu.vsza.adsapi;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.ArrayList;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -28,14 +27,14 @@ public class Search {
 		}
 	}
 
-	public static List<Part> searchByPartName(String partName, Mode searchMode) throws IOException {
+	public static ArrayList<Part> searchByPartName(String partName, Mode searchMode) throws IOException {
 		Document doc = Jsoup.connect("http://www.alldatasheet.com/view.jsp")
 			.data("sField", Integer.toString(searchMode.getValue()))
 			.data("sSearchword", partName)
 			.post();
 		Elements tableRows = doc.select("tr.nv_td");
 
-		List<Part> partList = new ArrayList<Part>(tableRows.size());
+		ArrayList<Part> partList = new ArrayList<Part>(tableRows.size());
 
 		for (Element tableRow : tableRows) {
 			Elements rowCells = tableRow.getElementsByTag("td");
