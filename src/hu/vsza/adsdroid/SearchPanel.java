@@ -5,6 +5,7 @@ import java.io.IOException;
 import hu.vsza.adsapi.Search;
 import hu.vsza.adsapi.Part;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -34,8 +35,14 @@ public class SearchPanel extends Activity
 		String partName = partNameEditor.getText().toString();
 		try {
 			ArrayList<Part> results = Search.searchByPartName(partName, selectedSearchMode);
-			Toast.makeText(getBaseContext(), Integer.toString(results.size()) + " result(s) found",
-					Toast.LENGTH_SHORT).show();
+			if (results.isEmpty()) {
+				Toast.makeText(getBaseContext(), "No results found",
+						Toast.LENGTH_SHORT).show();
+			} else {
+				Intent intent = new Intent(this, PartList.class);
+				intent.putExtra(PartList.PARTS, results);
+				startActivity(intent);
+			}
 		} catch (IOException ioe) {
 			Toast.makeText(getBaseContext(), "Error fetching results: " + ioe.getMessage(),
 					Toast.LENGTH_SHORT).show();

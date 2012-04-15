@@ -12,5 +12,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="PartList"
+                  android:label="@string/part_list_title"/>
     </application>
 </manifest>

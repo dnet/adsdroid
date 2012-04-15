@@ -2,4 +2,5 @@
 <resources>
     <string name="app_name">ADSdroid</string>
     <string name="search_mode_prompt">Search mode</string>
+    <string name="part_list_title">Search results</string>
 </resources>
