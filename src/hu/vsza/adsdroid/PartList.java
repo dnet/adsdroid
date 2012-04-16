@@ -17,6 +17,6 @@ public class PartList extends ListActivity
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		ArrayList<Part> parts = getIntent().getParcelableArrayListExtra(PARTS);
+		List<Part> parts = (List<Part>)getIntent().getSerializableExtra(PARTS);
 	}
 }
