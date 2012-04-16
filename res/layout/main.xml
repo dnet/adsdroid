@@ -27,4 +27,3 @@
     android:text="Search by part name"
     android:onClick="searchByPartName" />
 </LinearLayout>
-
