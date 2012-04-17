@@ -5,8 +5,10 @@ import java.io.IOException;
 import hu.vsza.adsapi.Search;
 import hu.vsza.adsapi.Part;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.AsyncTask;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
@@ -15,6 +17,8 @@ import android.widget.Toast;
 
 public class SearchPanel extends Activity
 {
+	ProgressDialog mProgressDialog;
+
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -33,19 +37,67 @@ public class SearchPanel extends Activity
 		Search.Mode selectedSearchMode = (Search.Mode)searchModeSpinner.getSelectedItem();
 		EditText partNameEditor = (EditText)findViewById(R.id.part_name);
 		String partName = partNameEditor.getText().toString();
-		try {
-			ArrayList<Part> results = Search.searchByPartName(partName, selectedSearchMode);
-			if (results.isEmpty()) {
-				Toast.makeText(getBaseContext(), "No results found",
-						Toast.LENGTH_SHORT).show();
-			} else {
-				Intent intent = new Intent(this, PartList.class);
-				intent.putExtra(PartList.PARTS, results);
-				startActivity(intent);
+		mProgressDialog = new ProgressDialog(this);
+		mProgressDialog.setMessage("Searching...");
+		mProgressDialog.setIndeterminate(true);
+		SearchByPartName sbpn = new SearchByPartName();
+		sbpn.execute(new PartNameSearchParams(selectedSearchMode, partName));
+	}
+
+	private class PartNameSearchParams {
+
+		protected Search.Mode mode;
+		protected String partName;
+
+		public PartNameSearchParams(Search.Mode mode, String partName) {
+			this.mode = mode;
+			this.partName = partName;
+		}
+
+		public Search.Mode getMode() {
+			return mode;
+		}
+
+		public String getPartName() {
+			return partName;
+		}
+	}
+
+	private class SearchByPartName extends AsyncTask<PartNameSearchParams, Object, ArrayList<Part>> {
+
+		@Override
+		protected ArrayList<Part> doInBackground(PartNameSearchParams... params_array) {
+			PartNameSearchParams params = params_array[0];
+			try {
+				return Search.searchByPartName(params.getPartName(), params.getMode());
+			} catch (IOException ioe) {
+				return null;
 			}
-		} catch (IOException ioe) {
-			Toast.makeText(getBaseContext(), "Error fetching results: " + ioe.getMessage(),
-					Toast.LENGTH_SHORT).show();
+		}
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			mProgressDialog.show();
+		}
+
+		@Override
+		protected void onPostExecute(ArrayList<Part> result) {
+			super.onPostExecute(result);
+			mProgressDialog.dismiss();
+			if (result != null) {
+				if (result.isEmpty()) {
+					Toast.makeText(getBaseContext(), "No results found.",
+							Toast.LENGTH_SHORT).show();
+				} else {
+					Intent intent = new Intent(SearchPanel.this, PartList.class);
+					intent.putExtra(PartList.PARTS, result);
+					startActivity(intent);
+				}
+			} else {
+				Toast.makeText(getBaseContext(), "Error fetching results.",
+						Toast.LENGTH_SHORT).show();
+			}
 		}
 	}
 }
