@@ -8,6 +8,8 @@ import java.net.URLConnection;
 import hu.vsza.adsapi.Part;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.AsyncTask;
 import android.text.format.DateFormat;
@@ -96,6 +98,13 @@ public class PartList extends ListActivity
 			mProgressDialog.dismiss();
 			Toast.makeText(getBaseContext(), result == null ? "Error happened during download" : "Datasheet saved as " + result,
 					Toast.LENGTH_SHORT).show();
+			if (result != null) {
+				Intent intent = new Intent();
+				intent.setAction(android.content.Intent.ACTION_VIEW);
+				File file = new File(result);
+				intent.setData(Uri.fromFile(file));
+				startActivity(intent);
+			}
 		}
 	}
 }
