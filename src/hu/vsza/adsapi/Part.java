@@ -12,6 +12,7 @@ import org.jsoup.select.Elements;
 public class Part extends HashMap<String, String> {
 
 	public final static String NAME = "NAME", DESCRIPTION = "DESCRIPTION", HREF = "HREF";
+	public final static String UA = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/536.6 (KHTML, like Gecko) Chrome/20.0.1088.0 Safari/536.6";
 
 	public Part(String name, String description, String href) {
 		super(3);
@@ -27,7 +28,7 @@ public class Part extends HashMap<String, String> {
 		Element viewPageLink = doc.select("td.blue a").get(0);
 		String viewPageUrl = viewPageLink.absUrl("href");
 
-		doc = Jsoup.connect(viewPageUrl).referrer(href).get();
+		doc = Jsoup.connect(viewPageUrl).referrer(href).userAgent(UA).get();
 		Element pdfIframe = doc.getElementsByTag("iframe").get(0);
 		String pdfUrl = pdfIframe.absUrl("src");
 
