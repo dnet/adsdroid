@@ -2,6 +2,8 @@ package hu.vsza.adsdroid;
 
 import java.util.ArrayList;
 import java.io.IOException;
+import java.net.CookieHandler;
+import java.net.CookieManager;
 import hu.vsza.adsapi.Search;
 import hu.vsza.adsapi.Part;
 import android.app.Activity;
@@ -30,6 +32,8 @@ public class SearchPanel extends Activity
 				android.R.layout.simple_spinner_item, Search.Mode.values());
 		searchModeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		searchModeSpinner.setAdapter(searchModeAdapter);
+		CookieManager cookieManager = new CookieManager();
+		CookieHandler.setDefault(cookieManager);
 	}
 
 	public void searchByPartName(View view) {
