@@ -11,7 +11,6 @@ import org.jsoup.select.Elements;
 
 public class Part extends HashMap<String, String> {
 
-	protected String name, description, href;
 	public final static String NAME = "NAME", DESCRIPTION = "DESCRIPTION", HREF = "HREF";
 
 	public Part(String name, String description, String href) {
