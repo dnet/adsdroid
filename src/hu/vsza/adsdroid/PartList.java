@@ -1,7 +1,6 @@
 package hu.vsza.adsdroid;
 
 import java.util.List;
-import java.io.IOException;
 import hu.vsza.adsapi.Part;
 import android.app.ListActivity;
 import android.os.Bundle;
