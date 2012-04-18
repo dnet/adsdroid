@@ -108,7 +108,7 @@ public class PartList extends ListActivity
 			Intent intent = new Intent();
 			intent.setAction(android.content.Intent.ACTION_VIEW);
 			File file = new File(fileName);
-			intent.setData(Uri.fromFile(file));
+			intent.setDataAndType(Uri.fromFile(file), "application/pdf");
 			try {
 				startActivity(intent);
 			} catch (ActivityNotFoundException e) {
