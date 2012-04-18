@@ -9,6 +9,7 @@ import hu.vsza.adsapi.Part;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.ActivityNotFoundException;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.AsyncTask;
@@ -108,7 +109,12 @@ public class PartList extends ListActivity
 			intent.setAction(android.content.Intent.ACTION_VIEW);
 			File file = new File(fileName);
 			intent.setData(Uri.fromFile(file));
-			startActivity(intent);
+			try {
+				startActivity(intent);
+			} catch (ActivityNotFoundException e) {
+				Toast.makeText(getBaseContext(), "Failed to open PDF viewer, do you have one installed?",
+						Toast.LENGTH_SHORT).show();
+			}
 		}
 	}
 }
