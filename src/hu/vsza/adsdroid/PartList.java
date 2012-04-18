@@ -99,12 +99,16 @@ public class PartList extends ListActivity
 			Toast.makeText(getBaseContext(), result == null ? "Error happened during download" : "Datasheet saved as " + result,
 					Toast.LENGTH_SHORT).show();
 			if (result != null) {
-				Intent intent = new Intent();
-				intent.setAction(android.content.Intent.ACTION_VIEW);
-				File file = new File(result);
-				intent.setData(Uri.fromFile(file));
-				startActivity(intent);
+				openPDF(result);
 			}
+		}
+
+		protected void openPDF(String fileName) {
+			Intent intent = new Intent();
+			intent.setAction(android.content.Intent.ACTION_VIEW);
+			File file = new File(fileName);
+			intent.setData(Uri.fromFile(file));
+			startActivity(intent);
 		}
 	}
 }
