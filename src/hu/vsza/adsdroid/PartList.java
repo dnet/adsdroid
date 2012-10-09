@@ -97,6 +97,7 @@ public class PartList extends ListActivity
 		protected void onPostExecute(String result) {
 			super.onPostExecute(result);
 			mProgressDialog.dismiss();
+			mProgressDialog = null;
 			Toast.makeText(getBaseContext(), result == null ? "Error happened during download" : "Datasheet saved as " + result,
 					Toast.LENGTH_SHORT).show();
 			if (result != null) {

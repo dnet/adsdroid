@@ -89,6 +89,7 @@ public class SearchPanel extends Activity
 		protected void onPostExecute(ArrayList<Part> result) {
 			super.onPostExecute(result);
 			mProgressDialog.dismiss();
+			mProgressDialog = null;
 			if (result != null) {
 				if (result.isEmpty()) {
 					Toast.makeText(getBaseContext(), "No results found.",
