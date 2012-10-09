@@ -44,36 +44,24 @@ public class SearchPanel extends Activity
 		mProgressDialog = new ProgressDialog(this);
 		mProgressDialog.setMessage(getString(R.string.searching));
 		mProgressDialog.setIndeterminate(true);
-		SearchByPartName sbpn = new SearchByPartName();
-		sbpn.execute(new PartNameSearchParams(selectedSearchMode, partName));
+		new SearchByPartName(selectedSearchMode, partName).execute();
 	}
 
-	private class PartNameSearchParams {
+	private class SearchByPartName extends AsyncTask<Void, Object, ArrayList<Part>> {
 
-		protected Search.Mode mode;
-		protected String partName;
+		protected final Search.Mode mode;
+		protected final String partName;
 
-		public PartNameSearchParams(Search.Mode mode, String partName) {
+		public SearchByPartName(Search.Mode mode, String partName) {
+			super();
 			this.mode = mode;
 			this.partName = partName;
 		}
 
-		public Search.Mode getMode() {
-			return mode;
-		}
-
-		public String getPartName() {
-			return partName;
-		}
-	}
-
-	private class SearchByPartName extends AsyncTask<PartNameSearchParams, Object, ArrayList<Part>> {
-
 		@Override
-		protected ArrayList<Part> doInBackground(PartNameSearchParams... params_array) {
-			PartNameSearchParams params = params_array[0];
+		protected ArrayList<Part> doInBackground(Void... params_array) {
 			try {
-				return Search.searchByPartName(params.getPartName(), params.getMode());
+				return Search.searchByPartName(partName, mode);
 			} catch (IOException ioe) {
 				return null;
 			}
