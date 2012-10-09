@@ -7,7 +7,7 @@
 <TextView
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:text="Part name:"
+    android:text="@string/part_name_label"
     />
 <Spinner
     android:layout_width="fill_parent"
@@ -24,6 +24,6 @@
 <Button
     android:layout_height="wrap_content"
     android:layout_width="fill_parent"
-    android:text="Search by part name"
+    android:text="@string/search_by_part_name"
     android:onClick="searchByPartName" />
 </LinearLayout>
