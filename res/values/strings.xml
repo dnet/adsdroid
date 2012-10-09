@@ -3,4 +3,14 @@
     <string name="app_name">ADSdroid</string>
     <string name="search_mode_prompt">Search mode</string>
     <string name="part_list_title">Search results</string>
+    <string name="searching">Searching...</string>
+    <string name="no_results">No results found.</string>
+    <string name="error_fetching_results">Error fetching results.</string>
+    <string name="starting_download">Starting download...</string>
+    <string name="fetching_pdf_url">Fetching PDF URL...</string>
+    <string name="connecting_to_pdf_server">Connecting to PDF server...</string>
+    <string name="download_progress">Downloading datasheet... (fetched %d bytes so far)</string>
+    <string name="download_error">Error happened during download</string>
+    <string name="download_done">Datasheet saved as %s</string>
+    <string name="pdf_open_failed">Failed to open PDF viewer, do you have one installed?</string>
 </resources>

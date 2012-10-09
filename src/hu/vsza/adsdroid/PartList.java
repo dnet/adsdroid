@@ -39,7 +39,7 @@ public class PartList extends ListActivity
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		Part selectedPart = new Part((Map<String, String>)getListView().getItemAtPosition(position));
 		mProgressDialog = new ProgressDialog(this);
-		mProgressDialog.setMessage("Starting download...");
+		mProgressDialog.setMessage(getString(R.string.starting_download));
 		mProgressDialog.setIndeterminate(true);
 		DownloadDatasheet dd = new DownloadDatasheet();
 		dd.execute(selectedPart);
@@ -52,9 +52,9 @@ public class PartList extends ListActivity
 			Part selectedPart = parts[0];
 			String fileName = fileNameForPart(selectedPart);
 			try {
-				publishProgress("Fetching PDF URL...");
+				publishProgress(R.string.fetching_pdf_url);
 				URLConnection pdfConnection = selectedPart.getPdfConnection();
-				publishProgress("Connecting to PDF server...");
+				publishProgress(R.string.connecting_to_pdf_server);
 				pdfConnection.connect();
 				InputStream input = new BufferedInputStream(pdfConnection.getInputStream());
 				OutputStream output = new FileOutputStream(fileName);
@@ -64,7 +64,7 @@ public class PartList extends ListActivity
 				int count;
 				while ((count = input.read(data)) != -1) {
 					total += count;
-					publishProgress("Downloading datasheet... (fetched " + total + " bytes so far)");
+					publishProgress(getString(R.string.download_progress, total));
 					output.write(data, 0, count);
 				}
 
@@ -75,6 +75,10 @@ public class PartList extends ListActivity
 			} catch (Exception e) {
 				return null;
 			}
+		}
+
+		protected void publishProgress(int progress) {
+			publishProgress(getString(progress));
 		}
 
 		protected String fileNameForPart(Part part) {
@@ -98,7 +102,7 @@ public class PartList extends ListActivity
 			super.onPostExecute(result);
 			mProgressDialog.dismiss();
 			mProgressDialog = null;
-			Toast.makeText(getBaseContext(), result == null ? "Error happened during download" : "Datasheet saved as " + result,
+			Toast.makeText(getBaseContext(), result == null ? getString(R.string.download_error) : getString(R.string.download_done, result),
 					Toast.LENGTH_SHORT).show();
 			if (result != null) {
 				openPDF(result);
@@ -113,7 +117,7 @@ public class PartList extends ListActivity
 			try {
 				startActivity(intent);
 			} catch (ActivityNotFoundException e) {
-				Toast.makeText(getBaseContext(), "Failed to open PDF viewer, do you have one installed?",
+				Toast.makeText(getBaseContext(), R.string.pdf_open_failed,
 						Toast.LENGTH_SHORT).show();
 			}
 		}

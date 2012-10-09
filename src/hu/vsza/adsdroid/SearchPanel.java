@@ -42,7 +42,7 @@ public class SearchPanel extends Activity
 		EditText partNameEditor = (EditText)findViewById(R.id.part_name);
 		String partName = partNameEditor.getText().toString();
 		mProgressDialog = new ProgressDialog(this);
-		mProgressDialog.setMessage("Searching...");
+		mProgressDialog.setMessage(getString(R.string.searching));
 		mProgressDialog.setIndeterminate(true);
 		SearchByPartName sbpn = new SearchByPartName();
 		sbpn.execute(new PartNameSearchParams(selectedSearchMode, partName));
@@ -92,7 +92,7 @@ public class SearchPanel extends Activity
 			mProgressDialog = null;
 			if (result != null) {
 				if (result.isEmpty()) {
-					Toast.makeText(getBaseContext(), "No results found.",
+					Toast.makeText(getBaseContext(), R.string.no_results,
 							Toast.LENGTH_SHORT).show();
 				} else {
 					Intent intent = new Intent(SearchPanel.this, PartList.class);
@@ -100,7 +100,7 @@ public class SearchPanel extends Activity
 					startActivity(intent);
 				}
 			} else {
-				Toast.makeText(getBaseContext(), "Error fetching results.",
+				Toast.makeText(getBaseContext(), R.string.error_fetching_results,
 						Toast.LENGTH_SHORT).show();
 			}
 		}
