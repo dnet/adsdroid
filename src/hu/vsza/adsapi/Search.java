@@ -34,6 +34,7 @@ public class Search {
 		Document doc = Jsoup.connect("http://www.alldatasheet.com/view.jsp")
 			.data("sField", Integer.toString(searchMode.getValue()))
 			.data("sSearchword", partName)
+			.header("Accept-Language", "en")
 			.post();
 		Elements tableRows = doc.select("tr.nv_td");
 
