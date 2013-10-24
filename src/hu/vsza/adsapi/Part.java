@@ -34,7 +34,7 @@ public class Part extends HashMap<String, String> {
 		String viewPageUrl = viewPageLink.absUrl("href");
 
 		doc = Jsoup.connect(viewPageUrl).referrer(href).userAgent(UA).header("Accept-Language", "en").get();
-		Element pdfIframe = doc.getElementsByTag("iframe").get(0);
+		Element pdfIframe = doc.select("td iframe").get(0);
 		String pdfUrl = pdfIframe.absUrl("src");
 
 		URLConnection pdfConnection = new URL(pdfUrl).openConnection();
