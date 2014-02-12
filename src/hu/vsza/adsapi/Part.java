@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -34,11 +35,20 @@ public class Part extends HashMap<String, String> {
 		String viewPageUrl = viewPageLink.absUrl("href");
 
 		doc = Jsoup.connect(viewPageUrl).referrer(href).userAgent(UA).header("Accept-Language", "en").get();
-		Element pdfIframe = doc.select("td iframe").get(0);
+		Element pdfIframe = getDatasheetIframe(doc);
 		String pdfUrl = pdfIframe.absUrl("src");
 
 		URLConnection pdfConnection = new URL(pdfUrl).openConnection();
 		pdfConnection.setRequestProperty("Referer", viewPageUrl);
 		return pdfConnection;
+	}
+
+	protected static Element getDatasheetIframe(Element doc) {
+		List<Element> iframes = doc.select("iframe");
+		for (Element iframe : iframes) {
+			String src = iframe.attr("src");
+			if (!src.startsWith("http") && !src.startsWith("//")) return iframe;
+		}
+		return iframes.get(0);
 	}
 }
