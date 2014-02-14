@@ -72,7 +72,7 @@ public class PartList extends ListActivity
 				output.close();
 				input.close();
 				return fileName;
-			} catch (Exception e) {
+			} catch (IOException e) {
 				return null;
 			}
 		}
