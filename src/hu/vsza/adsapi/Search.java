@@ -2,15 +2,12 @@ package hu.vsza.adsapi;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.regex.*;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 public class Search {
-	protected static final Pattern jsPattern = Pattern.compile("'([^']+)'[^']*'([^']+)'[^']*'([^']+)'");
-
 	public enum Mode {
 		INCLUDED(1), START_WITH(2), END(3), MATCH(4);
 
@@ -42,16 +39,13 @@ public class Search {
 
 		for (Element tableRow : tableRows) {
 			Elements rowCells = tableRow.getElementsByTag("td");
-			String foundPartName = rowCells.get(1).text();
+			if (rowCells.size() < 3) continue;
+			Element firstCol = rowCells.get(0);
+			Elements links = firstCol.getElementsByTag("a");
+			if (links.size() == 0) continue;
+			String foundPartName = firstCol.text();
 			String foundPartDesc = rowCells.get(2).text();
-			String foundPartHref = rowCells.get(3).getElementsByTag("a").get(0).attributes().get("href");
-			final Matcher m = jsPattern.matcher(foundPartHref);
-			if (m.find()) {
-				foundPartHref = new StringBuilder("http://www.alldatasheet.com/datasheet-pdf/pdf/")
-					.append(m.group(1)).append('/')
-					.append(m.group(2)).append('/')
-					.append(m.group(3)).append(".html").toString();
-			}
+			String foundPartHref = links.get(0).attributes().get("href");
 			partList.add(new Part(foundPartName, foundPartDesc, foundPartHref));
 		}
 
