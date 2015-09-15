@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.jsoup.Jsoup;
+import org.jsoup.Connection;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -34,11 +35,18 @@ public class Part extends HashMap<String, String> {
 		Element viewPageLink = doc.select("td.blue a").get(0);
 		String viewPageUrl = viewPageLink.absUrl("href");
 
-		doc = Jsoup.connect(viewPageUrl).referrer(href).userAgent(UA).header("Accept-Language", "en").get();
-		Element pdfIframe = getDatasheetIframe(doc);
+		Connection.Response resp = Jsoup.connect(viewPageUrl).referrer(href)
+			.userAgent(UA).header("Accept-Language", "en").execute();
+		StringBuilder cookies = new StringBuilder();
+		for (Map.Entry<String, String> e : resp.cookies().entrySet()) {
+			if (cookies.length() != 0) cookies.append("; ");
+			cookies.append(e.getKey()).append('=').append(e.getValue());
+		}
+		Element pdfIframe = getDatasheetIframe(resp.parse());
 		String pdfUrl = pdfIframe.absUrl("src");
 
 		URLConnection pdfConnection = new URL(pdfUrl).openConnection();
+		pdfConnection.setRequestProperty("Cookie", cookies.toString());
 		pdfConnection.setRequestProperty("Referer", viewPageUrl);
 		return pdfConnection;
 	}
