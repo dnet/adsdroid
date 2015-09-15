@@ -14,13 +14,13 @@ public class Search {
 	public enum Mode {
 		INCLUDED(1), START_WITH(2), END(3), MATCH(4);
 
-		private int value;
+		private byte value;
 
 		private Mode(int value) {
-			this.value = value;
+			this.value = (byte)value;
 		}
 
-		public int getValue() {
+		public byte getValue() {
 			return value;
 		}
 
@@ -32,7 +32,7 @@ public class Search {
 
 	public static ArrayList<Part> searchByPartName(String partName, Mode searchMode) throws IOException {
 		Document doc = Jsoup.connect("http://www.alldatasheet.com/view.jsp")
-			.data("sField", Integer.toString(searchMode.getValue()))
+			.data("sField", Byte.toString(searchMode.getValue()))
 			.data("sSearchword", partName)
 			.header("Accept-Language", "en")
 			.post();
