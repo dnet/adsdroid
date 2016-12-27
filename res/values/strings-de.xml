@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="connecting_to_pdf_server">Verbinde zu PDF-Server</string>
+    <string name="download_done">Datenblatt als %s gespeichert</string>
+    <string name="download_error">Fehler beim Download</string>
+    <string name="download_progress">Downloade Datenblatt... (%d bytes bereits heruntergeladen)</string>
+    <string name="error_fetching_results">Fehler beim Bekommen der Resultate</string>
+    <string name="fetching_pdf_url">Lade PDF URL herunter...</string>
+    <string name="no_results">Keine Ergebnisse gefunden</string>
+    <string name="part_list_title">Suche in Resultaten</string>
+    <string name="part_name_label">Name des Teils:</string>
+    <string name="pdf_open_failed">Konnte PDF-Betrachter nicht öffnen. Haben Sie einen installiert?</string>
+    <string name="search_by_part_name">Suche Nach Name des Bauteils</string>
+    <string name="search_mode_prompt">Suchmodus</string>
+    <string name="searching">Suche...</string>
+    <string name="starting_download">Beginne Download...</string>
+</resources>
