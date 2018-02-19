@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ADSdroid</string>
+    <string name="search_mode_prompt">Modo de busca</string>
+    <string name="part_list_title">Resultados da busca</string>
+    <string name="searching">Buscando...</string>
+    <string name="no_results">Nenhum resultado encontrado.</string>
+    <string name="error_fetching_results">Erro ao obter resultados.</string>
+    <string name="starting_download">Começando a baixar...</string>
+    <string name="fetching_pdf_url">Obtendo URL do PDF...</string>
+    <string name="connecting_to_pdf_server">Conectando ao servidor de PDF...</string>
+    <string name="download_progress">Baixando datasheet... (obtidos %d bytes até agora)</string>
+    <string name="download_error">Erro ocorreu durante o download</string>
+    <string name="download_done">Datasheet salvo como %s</string>
+    <string name="pdf_open_failed">Falha ao abrir o visualizador PDF, você tem algum instalado?</string>
+    <string name="part_name_label">Nome da peça:</string>
+    <string name="search_by_part_name">Procurar pelo nome da peça</string>
+</resources>
