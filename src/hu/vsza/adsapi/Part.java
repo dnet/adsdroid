@@ -48,6 +48,7 @@ public class Part extends HashMap<String, String> {
 		URLConnection pdfConnection = new URL(pdfUrl).openConnection();
 		pdfConnection.setRequestProperty("Cookie", cookies.toString());
 		pdfConnection.setRequestProperty("Referer", viewPageUrl);
+		pdfConnection.setRequestProperty("User-Agent", UA);
 		return pdfConnection;
 	}
 
