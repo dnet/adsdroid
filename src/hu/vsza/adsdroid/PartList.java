@@ -13,6 +13,7 @@ import android.content.ActivityNotFoundException;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.AsyncTask;
+import android.os.Environment;
 import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.ListView;
@@ -45,19 +46,19 @@ public class PartList extends ListActivity
 		dd.execute(selectedPart);
 	}
 
-	private class DownloadDatasheet extends AsyncTask<Part, String, String> {
+	private class DownloadDatasheet extends AsyncTask<Part, String, File> {
 
 		@Override
-		protected String doInBackground(Part... parts) {
+		protected File doInBackground(Part... parts) {
 			Part selectedPart = parts[0];
-			String fileName = fileNameForPart(selectedPart);
 			try {
+				File file = fileForPart(selectedPart);
 				publishProgress(R.string.fetching_pdf_url);
 				URLConnection pdfConnection = selectedPart.getPdfConnection();
 				publishProgress(R.string.connecting_to_pdf_server);
 				pdfConnection.connect();
 				InputStream input = new BufferedInputStream(pdfConnection.getInputStream());
-				OutputStream output = new FileOutputStream(fileName);
+				OutputStream output = new FileOutputStream(file);
 
 				byte data[] = new byte[1024];
 				long total = 0;
@@ -71,7 +72,7 @@ public class PartList extends ListActivity
 				output.flush();
 				output.close();
 				input.close();
-				return fileName;
+				return file;
 			} catch (IOException e) {
 				return null;
 			}
@@ -81,8 +82,13 @@ public class PartList extends ListActivity
 			publishProgress(getString(progress));
 		}
 
-		protected String fileNameForPart(Part part) {
-			return "/sdcard/" + part.get(Part.NAME) + DateFormat.format("-yyyyMMdd-kkmmss", new Date()) + ".pdf";
+		protected File fileForPart(Part part) throws IOException {
+			File path = Environment.getExternalStoragePublicDirectory(
+					Environment.DIRECTORY_DOWNLOADS);
+			path.mkdirs();
+			File file = new File(path, part.get(Part.NAME) +
+					DateFormat.format("-yyyyMMdd-kkmmss", new Date()) + ".pdf");
+			return file;
 		}
 
 		@Override
@@ -98,21 +104,20 @@ public class PartList extends ListActivity
 		}
 
 		@Override
-		protected void onPostExecute(String result) {
+		protected void onPostExecute(File result) {
 			super.onPostExecute(result);
 			mProgressDialog.dismiss();
 			mProgressDialog = null;
-			Toast.makeText(getBaseContext(), result == null ? getString(R.string.download_error) : getString(R.string.download_done, result),
+			Toast.makeText(getBaseContext(), result == null ? getString(R.string.download_error) : getString(R.string.download_done, result.getName()),
 					Toast.LENGTH_SHORT).show();
 			if (result != null) {
 				openPDF(result);
 			}
 		}
 
-		protected void openPDF(String fileName) {
+		protected void openPDF(File file) {
 			Intent intent = new Intent();
 			intent.setAction(android.content.Intent.ACTION_VIEW);
-			File file = new File(fileName);
 			intent.setDataAndType(Uri.fromFile(file), "application/pdf");
 			try {
 				startActivity(intent);
