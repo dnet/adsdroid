@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class SearchPanel extends Activity
@@ -34,6 +35,16 @@ public class SearchPanel extends Activity
 		searchModeSpinner.setAdapter(searchModeAdapter);
 		CookieManager cookieManager = new CookieManager();
 		CookieHandler.setDefault(cookieManager);
+
+		Intent intent = getIntent();
+		if (Intent.ACTION_SEND.equals(intent.getAction()) &&
+				"text/plain".equals(intent.getType())) {
+			String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
+			if (sharedText != null) {
+				EditText partNameEditor = (EditText)findViewById(R.id.part_name);
+				partNameEditor.setText(sharedText, TextView.BufferType.EDITABLE);
+			}
+		}
 	}
 
 	public void searchByPartName(View view) {
