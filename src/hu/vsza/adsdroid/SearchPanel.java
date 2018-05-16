@@ -36,12 +36,12 @@ public class SearchPanel extends Activity
 		CookieManager cookieManager = new CookieManager();
 		CookieHandler.setDefault(cookieManager);
 
+		EditText partNameEditor = (EditText)findViewById(R.id.part_name);
 		Intent intent = getIntent();
 		if (Intent.ACTION_SEND.equals(intent.getAction()) &&
 				"text/plain".equals(intent.getType())) {
 			String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
 			if (sharedText != null) {
-				EditText partNameEditor = (EditText)findViewById(R.id.part_name);
 				partNameEditor.setText(sharedText, TextView.BufferType.EDITABLE);
 			}
 		}
