@@ -12,13 +12,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.AsyncTask;
 import android.view.View;
+import android.view.KeyEvent;
+import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class SearchPanel extends Activity
+public class SearchPanel extends Activity implements TextView.OnEditorActionListener
 {
 	ProgressDialog mProgressDialog;
 
@@ -45,6 +47,20 @@ public class SearchPanel extends Activity
 				partNameEditor.setText(sharedText, TextView.BufferType.EDITABLE);
 			}
 		}
+
+		partNameEditor.setOnEditorActionListener(this);
+	}
+
+	// implements TextView.OnEditorActionListener
+	// based on https://stackoverflow.com/a/3205405 by Robby Pond (@robbypond)
+
+	@Override
+	public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+		if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+			searchByPartName(v);
+			return true;
+		}
+		return false;
 	}
 
 	public void searchByPartName(View view) {

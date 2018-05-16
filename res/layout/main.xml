@@ -20,6 +20,8 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:id="@+id/part_name"
+    android:imeOptions="actionSearch"
+    android:inputType="text"
     />
 <Button
     android:layout_height="wrap_content"
