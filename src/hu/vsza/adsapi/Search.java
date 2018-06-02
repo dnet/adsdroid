@@ -45,7 +45,7 @@ public class Search {
 			if (links.size() == 0) continue;
 			String foundPartName = firstCol.text();
 			String foundPartDesc = rowCells.get(2).text();
-			String foundPartHref = links.get(0).attributes().get("href");
+			String foundPartHref = links.get(0).absUrl("href");
 			partList.add(new Part(foundPartName, foundPartDesc, foundPartHref));
 		}
 
