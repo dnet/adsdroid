@@ -44,7 +44,7 @@ public class SearchPanel extends Activity implements TextView.OnEditorActionList
 				"text/plain".equals(intent.getType())) {
 			String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
 			if (sharedText != null) {
-				partNameEditor.setText(sharedText, TextView.BufferType.EDITABLE);
+				partNameEditor.setText(sharedText);
 			}
 		}
 
