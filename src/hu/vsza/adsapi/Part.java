@@ -31,12 +31,12 @@ public class Part extends HashMap<String, String> {
 	public URLConnection getPdfConnection() throws IOException {
 		String href = get(HREF);
 
-		Document doc = Jsoup.connect(href).get();
+		Document doc = Jsoup.connect(href).timeout(0).get();
 		Element viewPageLink = doc.select("td.blue a").get(0);
 		String viewPageUrl = viewPageLink.absUrl("href");
 
 		Connection.Response resp = Jsoup.connect(viewPageUrl).referrer(href)
-			.userAgent(UA).header("Accept-Language", "en").execute();
+			.timeout(0).userAgent(UA).header("Accept-Language", "en").execute();
 		StringBuilder cookies = new StringBuilder();
 		for (Map.Entry<String, String> e : resp.cookies().entrySet()) {
 			if (cookies.length() != 0) cookies.append("; ");

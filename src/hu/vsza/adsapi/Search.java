@@ -28,10 +28,11 @@ public class Search {
 	}
 
 	public static ArrayList<Part> searchByPartName(String partName, Mode searchMode) throws IOException {
-		Document doc = Jsoup.connect("http://www.alldatasheet.com/view.jsp")
+		Document doc = Jsoup.connect("https://www.alldatasheet.com/view.jsp")
 			.data("sField", Byte.toString(searchMode.getValue()))
 			.data("sSearchword", partName)
 			.header("Accept-Language", "en")
+			.timeout(0)
 			.post();
 		Elements tableRows = doc.select("tr.nv_td");
 
