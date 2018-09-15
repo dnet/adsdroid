@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ADSdroid</string>
+    <string name="search_mode_prompt">Arama modu</string>
+    <string name="part_list_title">Arama sonuçları</string>
+    <string name="searching">Aranıyor ...</string>
+    <string name="no_results">Sonuç bulunamadı.</string>
+    <string name="error_fetching_results">Sonuçlar getirilirken hata oluştu.</string>
+    <string name="starting_download">İndirme başlatılıyor ...</string>
+    <string name="fetching_pdf_url">PDF URL alınıyor ...</string>
+    <string name="connecting_to_pdf_server">PDF sunucusuna bağlanıyor ...</string>
+    <string name="download_progress">Datasheet indiriliyor ... (şu ana kadar %d bayt indirildi)</string>
+    <string name="download_error">İndirme sırasında hata oluştu</string>
+    <string name="download_done">Datasheet %s olarak kaydedildi</string>
+    <string name="pdf_open_failed">PDF görüntüleyici açılamadı, yüklü bir uygulama var mı?</string>
+    <string name="part_name_label">Bölüm adı:</string>
+    <string name="search_by_part_name">Parça adına göre ara</string>
+</resources>
